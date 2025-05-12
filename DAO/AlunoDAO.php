@@ -42,7 +42,7 @@ final class AlunoDAO extends DAO
         $stmt->bindVaçue(4, $model->Id);
         $stmt->execute();
 
-        return $model;
+        return $stmt;
     }
 
     public function selectById(int $id) : ?Aluno 
@@ -50,8 +50,29 @@ final class AlunoDAO extends DAO
         $sql = "SELECT * FROM aluno WHERE id=?";
 
         $stmt = parent::$conexao->prepare($sql);
-
         $stmt->bindValue(1, $id);
+        $stmt->execute();
+
+        return $stmt->fetchObject("App\Model\Aluno");
+    }
+
+    public function select() : array
+    {
+        $sql = "SELECT * FROM aluno ";
+
+        $stmt = parent::$conexao->prepare($sql);
+        $stmt->execute();
+
+        return $stmt->fetchAll(DAO::FETCH_CLASS, "App\Model\Aluno");
+    }
+
+    public function delete(int $id) : bool
+    {
+        $sql = "DELETE FROM aluno WHERE id=? ";
+
+        $stmt = parent::$conexao->prepare($sql);
+        $stmt->bindValue(1,$id);
+        return $stmt->execute();
     }
 }
 ?>

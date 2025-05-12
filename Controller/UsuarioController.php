@@ -2,36 +2,34 @@
 
 namespace App\Controller;
 
-use App\Model\Autor;
+use App\Model\Usuario;
+
 use Exception;
 
-
-final class AutorController extends Controller
+final class UsuarioController extends Controller
 {
     public static function index() : void
     {
-        parent::isProtected(); 
+        parent::isProtected();
 
-        $model = new Autor();
-        
-        try 
+        $model = new Usuario();
+
+        try
         {
             $model->getAllRows();
-
-        } catch(Exception $e) 
+        }catch(Exception $e)
         {
-            $model->setError("Ocorreu um erro ao buscar os autores:");
+            $model->setError("Ocorreu um erro ao buscar os usuarios:");
             $model->setError($e->getMessage());
         }
 
-        parent::render('Autor/lista_autor.php', $model); 
-    } 
-
+        parent::render('Usuario/lista_usuario.php', $model);
+    }
     public static function cadastro() : void
     {
         parent::isProtected(); 
 
-        $model = new Autor();
+        $model = new Usuario();
         
         try
         {
@@ -39,11 +37,11 @@ final class AutorController extends Controller
             {
                 $model->Id = !empty($_POST['id']) ? $_POST['id'] : null;
                 $model->Nome = $_POST['nome'];
-                $model->Data_Nascimento = $_POST['data_de_nascimento'];
-                $model->CPF = $_POST['cpf'];
+                $model->Email = $_POST['email'];
+                $model->Senha = $_POST['senha'];
                 $model->save();
 
-                parent::redirect("/autor");
+                parent::redirect("/usuario");
 
             } else 
             {
@@ -60,26 +58,26 @@ final class AutorController extends Controller
             $model->setError($e->getMessage());
         }
 
-        parent::render('Autor/form_autor.php', $model);        
+        parent::render('Usuario/form_usuario.php', $model);        
     } 
-    
     public static function delete() : void
     {
         parent::isProtected(); 
 
-        $model = new Autor();
+        $model = new Usuario();
         
         try 
         {
             $model->delete( (int) $_GET['id']);
-            parent::redirect("/autor");
+            parent::redirect("/usuario");
 
         } catch(Exception $e) 
         {
-            $model->setError("Ocorreu um erro ao excluir o autor:");
+            $model->setError("Ocorreu um erro ao excluir o usuario:");
             $model->setError($e->getMessage());
         } 
         
-        parent::render('Autor/lista_autor.php', $model);  
+        parent::render('Usuario/lista_usuario.php', $model);  
     }
+    
 }
