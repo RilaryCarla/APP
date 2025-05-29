@@ -23,6 +23,16 @@
                 </thead>
                 <tbody>
                     <?php foreach($model->rows as $aluno): ?> <?php endforeach ?>
+                    <tr>
+                        <td> <?= $aluno->Id ?> </td>
+                        <td> <a href="/aluno/cadastro?id=<?= $aluno->Id ?>"> <?= $aluno->Nome?> </a> </td>
+                        <td> <?= $aluno->Curso ?> </td>
+                        <td> <a href="/aluno/delete?id=<?= $aluno->Id ?>"> Remover </a> </td>
+                    </tr>
+                    <?php endforeach ?>
                 </tbody>
+            </table>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     </body>
+</html>
